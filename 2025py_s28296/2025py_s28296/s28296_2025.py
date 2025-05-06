@@ -4,6 +4,7 @@ import re
 nucleotides = ['A', 'C', 'G', 'T']
 
 
+# Opening file and writing to it
 def write_fasta(seq_id, seq_description, sequence):
     with open(seq_id + ".fasta", 'w') as f:
         f.write(f">{seq_id} {seq_description}\n")
@@ -11,6 +12,7 @@ def write_fasta(seq_id, seq_description, sequence):
             f.write(sequence[i:i + 80] + '\n')
 
 
+# Calculating statistics
 def calculate_statistics(sequence):
     length = len(sequence)
     counts = {nuc: sequence.count(nuc) for nuc in 'ACGT'}
@@ -30,6 +32,7 @@ def calculate_statistics(sequence):
         print(f"CG%AT: {ratio:.2f}")
 
 
+# Sanitizing from wrong symbols
 def sanitize_id(name):
     return re.sub(r'[\\/*?:"<>|]', "", name)
 
@@ -71,12 +74,14 @@ while True:
     sequence_description = input("Enter the sequence description: ").capitalize()
     user_name = input("Enter your name: ").capitalize()
 
+    # Creating random DNA sequence
     dna_sequence = []
     for i in range(sequence_length):
         dna_sequence.append(random.choice(nucleotides))
 
     dna_sequence = "".join(dna_sequence)
 
+    # Adding user's name in the random position in the sequence
     random_pos = random.randint(0, sequence_length)
     dna_sequence_with_name = dna_sequence[:random_pos] + user_name + dna_sequence[random_pos:]
 
